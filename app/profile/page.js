@@ -140,15 +140,33 @@ export default function Dashboard() {
           </div>
         )}
 </div>
-        <h1
-          className="absolute text-white mt-7 text-4xl font-bold  px-4 py-2 rounded-lg "
-          style={{
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          StoryHub
-        </h1>
+<h1
+  className="absolute bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-2xl md:text-4xl lg:text-5xl font-extrabold px-6 py-3 rounded-lg shadow-lg"
+  style={{
+    left: "50%",
+    transform: "translateX(-50%)",
+    textShadow: "2px 4px 6px rgba(0, 0, 0, 0.3)",
+    animation: "pulse 2s infinite",
+  }}
+>
+  Talecademy
+  
+</h1>
+
+<style>
+  {`
+    @keyframes pulse {
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+      }
+      50% {
+        transform: translateX(-50%) scale(1.1);
+      }
+    }
+  `}
+</style>
+
+
       
 
       {/* Main Content */}

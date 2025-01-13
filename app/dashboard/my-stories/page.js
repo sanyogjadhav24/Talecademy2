@@ -5,6 +5,7 @@ import { db } from "../../firebase/firebase";
 import { collection, getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Link from "next/link";
+import { gsap } from "gsap"; // Import GSAP for animations
 
 export default function MyStories() {
   const [myStories, setMyStories] = useState([]);
@@ -72,6 +73,20 @@ export default function MyStories() {
     }
   }, [userId]);
 
+  // GSAP animation effect
+  useEffect(() => {
+    // Add animation when stories are loaded
+    if (myStories.length > 0) {
+      gsap.from(".story-card", {
+        opacity: 0,
+        y: 50,
+        stagger: 0.1,
+        duration: 1.2,
+        ease: "power2.out",
+      });
+    }
+  }, [myStories]);
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-8">
       {loading ? (
@@ -95,26 +110,13 @@ export default function MyStories() {
                 myStories.map((story) => (
                   <div
                     key={story.id}
-                    className="flex flex-col items-center bg-gray-100 p-6 rounded-xl shadow-xl relative"
+                    className="story-card flex flex-col items-center bg-gray-100 p-6 rounded-xl shadow-xl relative"
                   >
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-                      {story.title}
-                    </h3>
-                    <p className="text-gray-600 text-center mb-2">
-                      <strong>Author:</strong> {story.author}
-                    </p>
-                    <p className="text-gray-600 text-center mb-4">
-                      <strong>Genre:</strong> {story.genre}
-                    </p>
-                    <p className="text-gray-600 text-center mb-4">
-                      {story.description}
-                    </p>
-                    <Link
-                      href={{
-                        pathname: "/dashboard/story/",
-                        query: { id: story.id },
-                      }}
-                    >
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">{story.title}</h3>
+                    <p className="text-gray-600 text-center mb-2"><strong>Author:</strong> {story.author}</p>
+                    <p className="text-gray-600 text-center mb-4"><strong>Genre:</strong> {story.genre}</p>
+                    <p className="text-gray-600 text-center mb-4">{story.description}</p>
+                    <Link href={{ pathname: "/dashboard/story/", query: { id: story.id } }}>
                       <button className="bg-blue-600 text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-blue-700 transition-all duration-300">
                         Read More
                       </button>
