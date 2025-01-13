@@ -1,7 +1,7 @@
 'use client'; // Add this directive at the top to ensure this is treated as a Client Component.
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense,useEffect, useState } from 'react';
 import { db } from '../../firebase/firebase'; // Adjust the path as needed
 import { doc, getDoc } from 'firebase/firestore';
 
