@@ -1,24 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
 import { db } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-const StoryContent = ({ storyId }) => {
+const StoryContent = () => {
+  return (
+    <Suspense fallback={<div className="text-center p-6">Loading story...</div>}>
+      <StoryFetcher />
+    </Suspense>
+  );
+};
+
+const StoryFetcher = () => {
+  const searchParams = useSearchParams();
   const [story, setStory] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (storyId) {
+    const id = searchParams.get("id");
+    console.log("Story ID:", id);
+
+    if (id) {
       const fetchStory = async () => {
         try {
-          const docRef = doc(db, "stories", storyId);
+          const docRef = doc(db, "stories", id);
           const docSnap = await getDoc(docRef);
 
           if (docSnap.exists()) {
             setStory(docSnap.data());
           } else {
-            console.log("No such document with ID:", storyId);
+            console.log("No such document with ID:", id);
           }
         } catch (error) {
           console.error("Error fetching story:", error);
@@ -29,9 +42,10 @@ const StoryContent = ({ storyId }) => {
 
       fetchStory();
     } else {
+      console.log("No id in the searchParams");
       setLoading(false);
     }
-  }, [storyId]);
+  }, [searchParams]);
 
   if (loading) {
     return <div className="text-center p-6">Loading...</div>;
