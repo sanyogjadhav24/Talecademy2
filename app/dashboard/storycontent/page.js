@@ -1,30 +1,24 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { db } from "../../firebase/firebase"; // Adjust the path as needed
+import { db } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-const StoryContent = () => {
-  const searchParams = useSearchParams();
+const StoryContent = ({ storyId }) => {
   const [story, setStory] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const id = searchParams?.get("id");
-    console.log("Story ID:", id);
-
-    if (id) {
+    if (storyId) {
       const fetchStory = async () => {
         try {
-          const docRef = doc(db, "stories", id);
+          const docRef = doc(db, "stories", storyId);
           const docSnap = await getDoc(docRef);
 
           if (docSnap.exists()) {
-            console.log("Story data:", docSnap.data());
             setStory(docSnap.data());
           } else {
-            console.log("No such document with ID:", id);
+            console.log("No such document with ID:", storyId);
           }
         } catch (error) {
           console.error("Error fetching story:", error);
@@ -35,10 +29,9 @@ const StoryContent = () => {
 
       fetchStory();
     } else {
-      console.log("No id in the searchParams");
       setLoading(false);
     }
-  }, [searchParams]);
+  }, [storyId]);
 
   if (loading) {
     return <div className="text-center p-6">Loading...</div>;
@@ -54,7 +47,6 @@ const StoryContent = () => {
         {story.title}
       </h1>
 
-      {/* Displaying Story Details */}
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4 text-lg font-medium">
           <span className="text-gray-600">Author:</span>
@@ -70,7 +62,6 @@ const StoryContent = () => {
         </div>
       </div>
 
-      {/* Story Content */}
       <div className="mt-6 text-lg text-gray-700">
         <h2 className="text-xl font-semibold text-indigo-500 mb-3">Story:</h2>
         <p>{story.story}</p>
