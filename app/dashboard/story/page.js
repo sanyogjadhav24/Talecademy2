@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 
-import { useEffect, useState,Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import { db } from '../../firebase/firebase'; // Adjust the path as needed
 import { doc, getDoc } from 'firebase/firestore';
 
@@ -50,7 +50,7 @@ const StoryPage = () => {
   }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+  
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-semibold text-center text-indigo-600 mb-6">{story.title}</h1>
 
@@ -76,7 +76,7 @@ const StoryPage = () => {
         <p>{story.story}</p>
       </div>
     </div>
-    </Suspense>
+ 
   );
 };
 
