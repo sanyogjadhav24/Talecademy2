@@ -5,7 +5,7 @@ import { auth } from "../firebase/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import axios from "axios";
-import DashboardComponent from "../dashboard/page";
+import StoryPage from "../dashboard/page";
 
 export default function Dashboard() {
   const [userData, setUserData] = useState({
@@ -337,7 +337,7 @@ export default function Dashboard() {
 
         {/* Dashboard Content */}
         <div className="w-full">
-          <DashboardComponent />
+          <StoryPage />
         </div>
       </div>
     </div>
