@@ -337,7 +337,7 @@ const App = () => {
 
   return (
     <>
-      <GlobalStyle />
+      <GlobalStyle/>
       <Container>
         <Title>StoryHub</Title>
         <InputContainer>
