@@ -10,11 +10,11 @@ export async function POST(req) {
   }
 
   try {
-    // Build the prompt with user's input
+    
     const prompt = `${currentStory}\n\nUser choice: ${choice || "None"}\n\nContinue the story based on the genre: ${genre}, and themes like ${description}.\n\nGenerate a short continuation of the story, ensuring it ends on a point where new choices can be introduced.`;
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.NEXT_PUBLIC_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${AIzaSyDqiXA0HtCaRuRbww_0umF_4K9ESErqAK0}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
